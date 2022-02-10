@@ -1,0 +1,13 @@
+com\centroedu\alumno\controlador\ErrorMessage.class
+com\centroedu\alumno\service\AlumnoServImp.class
+com\centroedu\alumno\entities\Curso$CursoBuilder.class
+com\centroedu\alumno\ServletInitializer.class
+com\centroedu\alumno\entities\Curso.class
+com\centroedu\alumno\controlador\AlumnoController.class
+com\centroedu\alumno\swagger\SwaggerConfig.class
+com\centroedu\alumno\entities\Alumno$AlumnoBuilder.class
+com\centroedu\alumno\entities\Alumno.class
+com\centroedu\alumno\controlador\ErrorMessage$ErrorMessageBuilder.class
+com\centroedu\alumno\service\I_AlumnoService.class
+com\centroedu\alumno\AlumnoApplication.class
+com\centroedu\alumno\repositories\I_AlumnoRepository.class
