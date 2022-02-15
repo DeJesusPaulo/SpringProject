@@ -17,15 +17,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 @Entity
 @Table(name = "students")
-@Data
+@Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor 
+@NoArgsConstructor
 @Builder
 public class Student {
 	
@@ -35,6 +36,7 @@ public class Student {
 	
 	@Column(name = "name", nullable = false)
 	@NotEmpty(message = "Debe ingresar un nombre")
+	
 	private String name;
 	
 	@Column(name = "surname", nullable = false)
@@ -55,10 +57,9 @@ public class Student {
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "curso_id")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private Course curso;
-	
+	@JoinColumn(name = "course_Id")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler"})
+	private Course course;
 	
 	
 	
