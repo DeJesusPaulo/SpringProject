@@ -2,8 +2,9 @@ package com.centroedu.student.service;
 
 import java.util.List;
 
-import com.centroedu.student.entities.Student;
 import com.centroedu.student.entities.Course;
+import com.centroedu.student.entities.Student;
+
 
 public interface StudentService {
 	
@@ -15,6 +16,6 @@ public interface StudentService {
 	
 	public Student deleteStudent(Long id);
 	
-	public List<Student> findByCurso(Course curso);
+	public List<Student> findByCourse(Course id);
 
 }
