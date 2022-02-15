@@ -5,7 +5,7 @@ insert into courses(id,name,shift,days) values(4,'Practica Periodistica','Mañan
 insert into courses(id,name,shift,days) values(5,'Tactica II','Noche','jueves y viernes');
 
 
-insert into students(id,name,surname,dni,email,status,curso_id) values 
+insert into students(id,name,surname,dni,email,status,course_id) values 
 (1,'Juan','Sperti',23456988,'juancio@gmail.com','created',5),
 (2,'Ricardo','Cuccio',35649991,'cuccior@gmail.com','created',2),
 (3,'Pablo','Sosa',30456987,'sosa@gmail.com','created',1),
@@ -16,4 +16,8 @@ insert into students(id,name,surname,dni,email,status,curso_id) values
 (8,'Diego','Luna',33569124,'diegote@gmail.com','created',3),
 (9,'Martin','Rojas',32456971,'tinchoro@gmail.com','created',4),
 (10,'Alejandro','Dolina',15649523,'alejo@gmail.com','created',1);
+
+
+
+
 
