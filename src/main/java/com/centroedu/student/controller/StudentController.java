@@ -1,7 +1,7 @@
 package com.centroedu.student.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,6 +30,12 @@ import com.centroedu.student.service.StudentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
+
+import io.swagger.annotations.ApiResponse;
+
 @RestController
 @RequestMapping("api/v1/students")
 public class StudentController {
@@ -40,8 +45,11 @@ public class StudentController {
 	@Autowired
 	CourseService courseService;
 
-// ------------------------ List all Students -------------------	
-
+	@ApiOperation(value = "Show a list of all Students")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+							@ApiResponse(code = 404, message = "Service not found"),
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class)
+	})
 	@GetMapping
 	public ResponseEntity<List<Student>> listado() {
 		List<Student> students = studentService.listAllStudents();
@@ -52,10 +60,13 @@ public class StudentController {
 		return ResponseEntity.ok(students);
 	}
 
-// ------------------------ Search a Student by ID -------------------	
-
+	@ApiOperation(value = "Find a Student search by Id")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+							@ApiResponse(code = 404, message = "Service not found"),
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class)
+	})
 	@GetMapping("/search/{id}")
-	public ResponseEntity<Student> getStudent(@PathVariable("id") Long id) {
+	public ResponseEntity<Student> getStudent(@ApiParam(value = "Id of the Student") @PathVariable("id") Long id) {
 		Student student = studentService.getStudent(id);
 		if (id == null) {
 			return ResponseEntity.notFound().build();
@@ -64,10 +75,15 @@ public class StudentController {
 		return ResponseEntity.ok(student);
 	}
 
-// ------------------------ Create a Student -------------------		
-
-	@PutMapping("/create/{id}") 
-	public ResponseEntity<Student> createStudent(@Valid @PathVariable("id") Long id, @RequestBody Student alumno,
+	@ApiOperation(value = "create a Student")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+							@ApiResponse(code = 404, message = "Service not found"),
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) 
+	})
+	@PutMapping("/create/{id}")
+	public ResponseEntity<Student> createStudent(
+			@ApiParam(value = "Id of the Student") @Valid @PathVariable("id") Long id,
+			@ApiParam(value = "A Student send as a parameter") @RequestBody Student alumno,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatoMensajes(result));
@@ -82,10 +98,13 @@ public class StudentController {
 		return ResponseEntity.ok(student); //
 	}
 
-// ------------------------ Delete a Student -------------------		
-
+	@ApiOperation(value = "delete a Student")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+							@ApiResponse(code = 404, message = "Service not found"),
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) 
+	})
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Student> deleteStudent(@PathVariable("id") Long id) {
+	public ResponseEntity<Student> deleteStudent(@ApiParam(value = "Id of the Student") @PathVariable("id") Long id) {
 		Student student = studentService.deleteStudent(id);
 		if (id == null) {
 			return ResponseEntity.notFound().build();
@@ -93,34 +112,39 @@ public class StudentController {
 
 		return ResponseEntity.ok(student);
 	}
-	
-//------------------------- Show all the Courses ---------------------
-	
+
+	@ApiOperation(value = "Show all the Courses")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+							@ApiResponse(code = 404, message = "Service not found"),
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Course.class) 
+	})
 	@GetMapping("/courses")
-	public ResponseEntity<List<Course>> getAllCourses(){
+	public ResponseEntity<List<Course>> getAllCourses() {
 		List<Course> courses = courseService.getAllCursos();
-		
-		if (courses.isEmpty()) { return ResponseEntity.noContent().build(); }
-		
+
+		if (courses.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+
 		return ResponseEntity.ok(courses);
 	}
 
-// ------------------------ Search a student by Course  -------------------		
+	@ApiOperation(value = "Show all students in a Course")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+							@ApiResponse(code = 404, message = "Service not found"),
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class)
+	})
+	@GetMapping("/courses/search/{id}")
+	public ResponseEntity<List<Student>> findByCourse(@ApiParam(value = "Id of the Course") @PathVariable("id") Course id) {
 
-	@GetMapping("/search/course/{curso_id}")
-	public ResponseEntity<List<Student>> findByCurso(@RequestParam("curso_id") Long curso_id) {
-		List<Student> student = new ArrayList<>();
+		List<Student> students = studentService.findByCourse(id);
 
-		if (curso_id == null) {
-			return ResponseEntity.notFound().build(); }
-		 else {
-				student = studentService.findByCurso(Course.builder().id(curso_id).build());
-				if (student.isEmpty()) {
-					return ResponseEntity.noContent().build();
-				}
-			}
-		
-		return ResponseEntity.ok(student);
+		if (students.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+
+		return ResponseEntity.ok(students);
+
 	}
 
 	private String formatoMensajes(BindingResult result) {
