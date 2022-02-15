@@ -1,11 +1,13 @@
 package com.centroedu.student.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.centroedu.student.entities.Course;
+import com.centroedu.student.entities.Student;
 import com.centroedu.student.repositories.CourseRepository;
 import com.centroedu.student.service.CourseService;
 
@@ -13,18 +15,18 @@ import com.centroedu.student.service.CourseService;
 public class CourseServiceImpl implements CourseService {
 
 	@Autowired
-	CourseRepository cursoRepository;
+	CourseRepository courseRepository;
 	
 	@Override
 	public List<Course> getAllCursos() {
 		
-		return cursoRepository.findAll();
+		return courseRepository.findAll();
 	}
 
 	@Override
 	public Course findById(Long id) {
 		
-		return cursoRepository.getById(id);
+		return courseRepository.getById(id);
 	}
 
 }
