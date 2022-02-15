@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.centroedu.student.entities.Student;
 import com.centroedu.student.entities.Course;
+import com.centroedu.student.entities.Student;
+import com.centroedu.student.repositories.CourseRepository;
 import com.centroedu.student.repositories.StudentRepository;
 import com.centroedu.student.service.StudentService;
 
@@ -15,6 +16,8 @@ public class StudentServImp implements StudentService {
 	
 	@Autowired
 	StudentRepository studentRepository;
+	@Autowired
+	CourseRepository courseRepository;
 
 	@Override
 	public List<Student> listAllStudents() {
@@ -33,17 +36,16 @@ public class StudentServImp implements StudentService {
 		Student student1 = getStudent(student.getId());
 		if (student1 == null) { return null; }
 			
-		student.setName(student.getName());
-		student.setSurname(student.getSurname());
-		student.setDni(student.getDni());
-		student.setEmail(student.getEmail());
-		student.setCurso(student.getCurso());
-		student.setStatus("Student created");
+		student1.setName(student.getName());
+		student1.setSurname(student.getSurname());
+		student1.setDni(student.getDni());
+		student1.setEmail(student.getEmail());
+		student1.setCourse(student.getCourse());
+		student1.setStatus("Student created");
 		
 		return studentRepository.save(student1);
 		
 	}
-
 
 	@Override
 	public Student deleteStudent(Long id) {
@@ -56,11 +58,9 @@ public class StudentServImp implements StudentService {
 	}
 
 	@Override
-	public List<Student> findByCurso(Course curso) {
+	public List<Student> findByCourse(Course id) {	
 		
-		return studentRepository.findByCurso(curso);
+		return studentRepository.findByCourse(id);
+		
 	}
-
-	
-
 }
