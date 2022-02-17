@@ -47,9 +47,8 @@ public class StudentController {
 
 	@ApiOperation(value = "Show a list of all Students")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
-							@ApiResponse(code = 404, message = "Service not found"),
-							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class)
-	})
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 	@GetMapping
 	public ResponseEntity<List<Student>> listado() {
 		List<Student> students = studentService.listAllStudents();
@@ -62,9 +61,8 @@ public class StudentController {
 
 	@ApiOperation(value = "Find a Student search by Id")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
-							@ApiResponse(code = 404, message = "Service not found"),
-							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class)
-	})
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 	@GetMapping("/search/{id}")
 	public ResponseEntity<Student> getStudent(@ApiParam(value = "Id of the Student") @PathVariable("id") Long id) {
 		Student student = studentService.getStudent(id);
@@ -77,14 +75,12 @@ public class StudentController {
 
 	@ApiOperation(value = "create a Student")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
-							@ApiResponse(code = 404, message = "Service not found"),
-							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) 
-	})
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 	@PutMapping("/create/{id}")
 	public ResponseEntity<Student> createStudent(
 			@ApiParam(value = "Id of the Student") @Valid @PathVariable("id") Long id,
-			@ApiParam(value = "A Student send as a parameter") @RequestBody Student alumno,
-			BindingResult result) {
+			@ApiParam(value = "A Student send as a parameter") @RequestBody Student alumno, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatoMensajes(result));
 		}
@@ -100,9 +96,8 @@ public class StudentController {
 
 	@ApiOperation(value = "delete a Student")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
-							@ApiResponse(code = 404, message = "Service not found"),
-							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) 
-	})
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Student> deleteStudent(@ApiParam(value = "Id of the Student") @PathVariable("id") Long id) {
 		Student student = studentService.deleteStudent(id);
@@ -113,11 +108,40 @@ public class StudentController {
 		return ResponseEntity.ok(student);
 	}
 
-	@ApiOperation(value = "Show all the Courses")
+	@ApiOperation(value = "Find a Student search by DNI")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
+	@GetMapping("/search/{dni}")
+	public ResponseEntity<Student> findByDni(@ApiParam(value = "Dni of the Student") @PathVariable("dni") int dni) {
+		Student student = studentService.findByDni(dni);
+
+		if (dni == 0) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(student);
+	}
+
+	@ApiOperation(value = "Find a Student search by Surname")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
 							@ApiResponse(code = 404, message = "Service not found"),
-							@ApiResponse(code = 200, message = "Successful retrieval", response = Course.class) 
+							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) 
 	})
+	public  ResponseEntity<List<Student>> findBySurname(@ApiParam(value = "Surname of the Student") @PathVariable("surname") String surname) {
+		List<Student> students = studentService.findBySurname(surname);
+
+		if (surname == null) {
+			return ResponseEntity.noContent().build();
+		}
+
+		return ResponseEntity.ok(students);
+	}	
+	
+	@ApiOperation(value = "Show all students in a Course")
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 	@GetMapping("/courses")
 	public ResponseEntity<List<Course>> getAllCourses() {
 		List<Course> courses = courseService.getAllCursos();
@@ -131,11 +155,11 @@ public class StudentController {
 
 	@ApiOperation(value = "Show all students in a Course")
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
-							@ApiResponse(code = 404, message = "Service not found"),
-							@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class)
-	})
+			@ApiResponse(code = 404, message = "Service not found"),
+			@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 	@GetMapping("/courses/search/{id}")
-	public ResponseEntity<List<Student>> findByCourse(@ApiParam(value = "Id of the Course") @PathVariable("id") Course id) {
+	public ResponseEntity<List<Student>> findByCourse(
+			@ApiParam(value = "Id of the Course") @PathVariable("id") Course id) {
 
 		List<Student> students = studentService.findByCourse(id);
 
@@ -146,6 +170,8 @@ public class StudentController {
 		return ResponseEntity.ok(students);
 
 	}
+	
+	
 
 	private String formatoMensajes(BindingResult result) {
 		List<Map<String, String>> errores = result.getFieldErrors().stream().map(err -> {
