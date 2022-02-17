@@ -1,13 +1,11 @@
 package com.centroedu.student.service.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.centroedu.student.entities.Course;
-import com.centroedu.student.entities.Student;
 import com.centroedu.student.repositories.CourseRepository;
 import com.centroedu.student.service.CourseService;
 
