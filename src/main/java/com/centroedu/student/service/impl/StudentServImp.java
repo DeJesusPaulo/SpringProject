@@ -63,4 +63,16 @@ public class StudentServImp implements StudentService {
 		return studentRepository.findByCourse(id);
 		
 	}
+
+	@Override
+	public Student findByDni(int dni) {
+				
+		return studentRepository.findByDni(dni);
+	}
+
+	@Override
+	public List<Student> findBySurname(String surname) {
+		
+		return studentRepository.findBySurname(surname);
+	}
 }
