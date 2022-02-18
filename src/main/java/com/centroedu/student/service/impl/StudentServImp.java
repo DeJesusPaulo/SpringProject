@@ -11,6 +11,12 @@ import com.centroedu.student.repositories.CourseRepository;
 import com.centroedu.student.repositories.StudentRepository;
 import com.centroedu.student.service.StudentService;
 
+/**
+ * Class that implements the Service for Student Entity
+ * @author Paulo De Jesus
+ * @version 1.0
+ * @see StudentService
+ */
 @Service
 public class StudentServImp implements StudentService {
 	
@@ -18,19 +24,33 @@ public class StudentServImp implements StudentService {
 	StudentRepository studentRepository;
 	@Autowired
 	CourseRepository courseRepository;
-
+	
+	/**
+	 * Method that retrieves a list of all the Students
+	 * @return a list of Students
+	 */
 	@Override
 	public List<Student> listAllStudents() {
 		
 		return studentRepository.findAll();
 	}
 
+	/**
+	 * Method that retrieves a Student search by his Id
+	 * @param id
+	 * @return a Student
+	 */
 	@Override
 	public Student getStudent(Long id) {
 		
 		return studentRepository.findById(id).orElse(null);
 	}
 
+	/**
+	 * Method that creates a Student
+	 * @param alumno
+	 * @return the created Student
+	 */
 	@Override
 	public Student createStudent(Student student) {
 		Student student1 = getStudent(student.getId());
@@ -47,6 +67,11 @@ public class StudentServImp implements StudentService {
 		
 	}
 
+	/**
+	 * Method that deletes a Student 
+	 * @param id
+	 * @return the confirmation of the deleted Student
+	 */
 	@Override
 	public Student deleteStudent(Long id) {
 		Student student = getStudent(id);
@@ -57,6 +82,11 @@ public class StudentServImp implements StudentService {
 		return  studentRepository.save(student);
 	}
 
+	/**
+	 * Method that retrieves the list of Students in a Course
+	 * @param id
+	 * @return all the Students in a Course
+	 */
 	@Override
 	public List<Student> findByCourse(Course id) {	
 		
@@ -64,12 +94,22 @@ public class StudentServImp implements StudentService {
 		
 	}
 
+	/**
+	 * Method that retrieves a Student search by his Dni number
+	 * @param dni
+	 * @return
+	 */
 	@Override
 	public Student findByDni(int dni) {
 				
 		return studentRepository.findByDni(dni);
 	}
 
+	/**
+	 * Method that retrieves a Student or Students search by his surname
+	 * @param surname
+	 * @return a Student or Students
+	 */
 	@Override
 	public List<Student> findBySurname(String surname) {
 		
