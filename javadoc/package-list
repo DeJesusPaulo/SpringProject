@@ -1,0 +1,8 @@
+com.centroedu.alumno
+com.centroedu.student
+com.centroedu.student.controller
+com.centroedu.student.entities
+com.centroedu.student.repositories
+com.centroedu.student.service
+com.centroedu.student.service.impl
+com.centroedu.student.swagger
