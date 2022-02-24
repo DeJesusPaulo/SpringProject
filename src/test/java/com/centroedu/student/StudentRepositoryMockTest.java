@@ -18,7 +18,7 @@ public class StudentRepositoryMockTest {
 	StudentRepository studentRepository;
 
 	@Test
-	public void whenFindBySurname_thenReturnListStudents() {
+	public void whenFindAll_thenReturnListStudents() {
 		Student student01 = Student.builder()
 				.id(11L)
 				.name("Fred")
