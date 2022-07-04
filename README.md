@@ -7,7 +7,7 @@
 
 
 # General information
-Project based on a Educational Centre managing students and courses.
+Project based on a Educational Center managing students and courses.
 
 # Technologies
 - Java version: Amazon Corretto 1.8
