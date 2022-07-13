@@ -25,7 +25,7 @@ insert into students(id,name,surname,dni,email,status,course_id) values
 (17,'Valentin','Paiva',34555903,'vale@gmail.com','created',4),
 (18,'Emiliano','Savin',35419566,'emis@gmail.com','created',3),
 (19,'Martin','Cabrera',37896452,'maca@gmail.com','created',4),
-(20,'Benjamin','Conan',40894369,'benja@gmail.com','created',1):
+(20,'Benjamin','Conan',40894369,'benja@gmail.com','created',1);
 
 
 
