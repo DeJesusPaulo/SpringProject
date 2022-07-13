@@ -2,6 +2,7 @@ package com.centroedu.student.service;
 
 import java.util.List;
 
+
 import com.centroedu.student.entities.Course;
 import com.centroedu.student.entities.Student;
 
@@ -31,6 +32,13 @@ public interface StudentService {
 	 * @return the created Student
 	 */
 	public Student createStudent(Student alumno);
+	
+	/**
+	 * Method that updates a Student
+	 * @param student
+	 * @return the updated Student
+	 */
+	public Student updateStudent(Student student);
 	
 	/**
 	 * Method that deletes a Student 
