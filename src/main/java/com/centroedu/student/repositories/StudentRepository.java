@@ -30,7 +30,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	 * @return a Student
 	 */
 	
-	public Student findByDni(int dni);
+	public Student findByDni(String dni);
 	
 	/**
 	 * Method that retrieves a Student or Students search by his surname
