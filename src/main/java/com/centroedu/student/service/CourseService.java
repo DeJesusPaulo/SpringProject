@@ -20,7 +20,7 @@ public interface CourseService {
 	 * Method that retrieves a list of all the existing Courses
 	 * @return all the existing Courses
 	 */
-	public List<Course> getAllCursos();
+	public List<Course> getAllCourses();
 
 	/**
 	 * Method that retrieves a Course search by his Id
