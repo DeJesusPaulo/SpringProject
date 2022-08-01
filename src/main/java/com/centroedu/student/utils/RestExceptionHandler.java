@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.centroedu.student.utils.exceptions.DataValidationException;
-import com.centroedu.student.utils.exceptions.InvalidIdException;
-import com.centroedu.student.utils.exceptions.StudentNotFoundException;
-import com.centroedu.student.utils.exceptions.ListStudentsNotFoundException;
+import com.centroedu.student.utils.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,5 +38,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ListStudentsNotFoundException.class)
     public ResponseEntity<Object> handleException(ListStudentsNotFoundException e, WebRequest request){
         return new ResponseEntity<>(new ErrorResponse(e.getMessage(),HttpStatus.NO_CONTENT, LocalDateTime.now()), HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(CoursesNotFoundException.class)
+    public ResponseEntity<Object> handleException(CoursesNotFoundException e, WebRequest request){
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage(), HttpStatus.NO_CONTENT, LocalDateTime.now()), HttpStatus.NO_CONTENT);
     }
 }
