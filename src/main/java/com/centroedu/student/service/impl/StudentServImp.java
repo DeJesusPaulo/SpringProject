@@ -2,6 +2,7 @@ package com.centroedu.student.service.impl;
 
 import java.util.List;
 
+import com.centroedu.student.utils.exceptions.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,15 @@ import com.centroedu.student.repositories.CourseRepository;
 import com.centroedu.student.repositories.StudentRepository;
 import com.centroedu.student.service.StudentService;
 
+
+
 /**
  * Class that implements the Service for Student Entity
  * @author Paulo De Jesus
  * @version 1.0
  * @see StudentService
  */
+
 @Service
 public class StudentServImp implements StudentService {
 	
@@ -48,11 +52,27 @@ public class StudentServImp implements StudentService {
 
 	/**
 	 * Method that creates a Student
-	 * @param alumno
+	 * @param student
 	 * @return the created Student
 	 */
 	@Override
-	public Student createStudent(Student student) {
+	public Student  createStudent(Student student) throws StudentNotFoundException {
+
+		if (student == null) { return null; }
+			
+		student.setStatus("Student created");
+		
+		return studentRepository.save(student);
+	}
+	
+	/**
+	 * Method that creates a Student
+	 * @param student
+	 * @return the updated Student
+	 */
+	@Override
+	public Student updateStudent(Student student) {
+		
 		Student student1 = getStudent(student.getId());
 		if (student1 == null) { return null; }
 			
@@ -61,10 +81,9 @@ public class StudentServImp implements StudentService {
 		student1.setDni(student.getDni());
 		student1.setEmail(student.getEmail());
 		student1.setCourse(student.getCourse());
-		student1.setStatus("Student created");
+		student1.setStatus("Student updated");
 		
 		return studentRepository.save(student1);
-		
 	}
 
 	/**
@@ -79,8 +98,20 @@ public class StudentServImp implements StudentService {
 		
 		student.setStatus("Student deleted");
 		
-		return  studentRepository.save(student);
+		return studentRepository.save(student);
 	}
+	
+	/**
+	 * Method that retrieves a Student or Students search by his surname
+	 * @param surname
+	 * @return a Student or Students
+	 */
+	@Override
+	public List<Student> findBySurname(String surname) {
+		
+		return studentRepository.findBySurname(surname);
+	}
+
 
 	/**
 	 * Method that retrieves the list of Students in a Course
@@ -100,19 +131,10 @@ public class StudentServImp implements StudentService {
 	 * @return
 	 */
 	@Override
-	public Student findByDni(int dni) {
+	public Student findByDni(String dni) {
 				
 		return studentRepository.findByDni(dni);
 	}
 
-	/**
-	 * Method that retrieves a Student or Students search by his surname
-	 * @param surname
-	 * @return a Student or Students
-	 */
-	@Override
-	public List<Student> findBySurname(String surname) {
-		
-		return studentRepository.findBySurname(surname);
-	}
 }
+	
