@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.centroedu.student.entities.Course;
 import com.centroedu.student.entities.Student;
+import com.centroedu.student.utils.exceptions.StudentNotFoundException;
 
 /**
  * Service Class for Student Entity
@@ -31,7 +32,7 @@ public interface StudentService {
 	 * @param alumno
 	 * @return the created Student
 	 */
-	public Student createStudent(Student alumno);
+	public Student createStudent(Student alumno) throws StudentNotFoundException;
 	
 	/**
 	 * Method that updates a Student
@@ -59,7 +60,7 @@ public interface StudentService {
 	 * @param dni
 	 * @return
 	 */
-	public Student findByDni(int dni);
+	public Student findByDni(String dni);
 	
 	/**
 	 * Method that retrieves a Student or Students search by his surname
