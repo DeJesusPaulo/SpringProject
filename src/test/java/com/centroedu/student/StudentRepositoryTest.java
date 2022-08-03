@@ -13,7 +13,7 @@ import com.centroedu.student.entities.Student;
 import com.centroedu.student.repositories.StudentRepository;
 
 @DataJpaTest
-public class StudentRepositoryMockTest {
+public class StudentRepositoryTest {
 
 	@Autowired
 	StudentRepository studentRepository;
