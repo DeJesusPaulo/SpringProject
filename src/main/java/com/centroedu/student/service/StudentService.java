@@ -18,7 +18,7 @@ public interface StudentService {
 	 * Method that retrieves a list of all the Students
 	 * @return a list of Students
 	 */
-	public List<Student> listAllStudents();
+	public List<Student> listAllStudents(int offSet, int pageSize);
 	
 	/**
 	 * Method that retrieves a Student search by his Id
