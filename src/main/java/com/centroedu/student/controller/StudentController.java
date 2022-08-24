@@ -7,15 +7,7 @@
 	import org.springframework.beans.factory.annotation.Autowired;
 	import org.springframework.http.ResponseEntity;
 	import org.springframework.validation.BindingResult;
-	import org.springframework.web.bind.annotation.CrossOrigin;
-	import org.springframework.web.bind.annotation.DeleteMapping;
-	import org.springframework.web.bind.annotation.GetMapping;
-	import org.springframework.web.bind.annotation.PathVariable;
-	import org.springframework.web.bind.annotation.PostMapping;
-	import org.springframework.web.bind.annotation.PutMapping;
-	import org.springframework.web.bind.annotation.RequestBody;
-	import org.springframework.web.bind.annotation.RequestMapping;
-	import org.springframework.web.bind.annotation.RestController;
+	import org.springframework.web.bind.annotation.*;
 
 	import com.centroedu.student.entities.Student;
 	import com.centroedu.student.entities.Course;
@@ -46,9 +38,11 @@
 				@ApiResponse(code = 404, message = "Service not found"),
 				@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 		@GetMapping("/students")
-		public ResponseEntity<List<Student>> listStudents() {
+		public ResponseEntity<List<Student>> listStudents(
+				@RequestParam(value = "pageNumber", defaultValue = "0") int offSet,
+				@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-			List<Student> students = studentService.listAllStudents();
+			List<Student> students = studentService.listAllStudents(offSet, pageSize);
 			if (students.isEmpty()) {
 				log.error("Students not found");
 				throw new ListStudentsNotFoundException("Students not found");
