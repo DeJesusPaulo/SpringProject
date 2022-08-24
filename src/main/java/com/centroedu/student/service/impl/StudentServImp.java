@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.centroedu.student.utils.exceptions.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.centroedu.student.entities.Course;
@@ -34,9 +37,12 @@ public class StudentServImp implements StudentService {
 	 * @return a list of Students
 	 */
 	@Override
-	public List<Student> listAllStudents() {
-		
-		return studentRepository.findAll();
+	public List<Student> listAllStudents(int offSet, int pageSize) {
+		Pageable pageable = PageRequest.of(offSet, pageSize);
+		Page<Student> students = studentRepository.findAll(pageable);
+
+		List<Student> studentList = students.getContent();
+		return studentList;
 	}
 
 	/**
