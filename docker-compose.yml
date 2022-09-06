@@ -1,0 +1,44 @@
+version: "3"
+
+### Spring Boot Application ###
+services:
+  webapp:
+    image: "student-dck:latest"
+    build:
+      context: .
+    container_name: student-app
+    depends_on:
+      - postgres-db
+    environment:
+      - DB_SERVER=postgres-db
+      - POSTGRES_DB=student-db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+
+    ports:
+      - "8080:8083"
+
+### Postgres Database ###
+  postgres-db:
+    image: "postgres:13.1-alpine"
+    container_name: postgres-db
+    environment:
+      - POSTGRES_DB=student-db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5454:5432"
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=paulo.max.dj06@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=negro003
+    ports:
+      - "5050:80"
+
+volumes:
+  db-data:
