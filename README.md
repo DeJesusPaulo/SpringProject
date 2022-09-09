@@ -20,5 +20,5 @@ Project based on a Educational Center managing students and courses.
 To run this project run commands:
 - mvn clean install, to clean the project and install it
 - mvn spring-boot: run, to run the project
-- docker compose build, to build Docker containers
+- docker compose build, to build Docker container
 - docker compose up, to start the containers
