@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
  * Class Student with his attributes and methods
  * 
@@ -34,10 +35,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Student {
+public class Student extends BaseEntity{
 
 	/**
-	 * Id of the Student
+	 * ID of the Student
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
