@@ -1,12 +1,12 @@
-package com.centroedu.test;
+package com.centroedu.student;
 
-import com.centroedu.student.StudentApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 
 @SpringBootTest
+@ContextConfiguration(classes = StudentApplication.class)
 public class StudentApplicationTests {
 
     @Test
