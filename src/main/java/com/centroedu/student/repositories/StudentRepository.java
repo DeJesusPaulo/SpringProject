@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.centroedu.student.entities.Course;
+
 import com.centroedu.student.entities.Student;
 
 /**
@@ -17,26 +17,21 @@ import com.centroedu.student.entities.Student;
 public interface StudentRepository extends JpaRepository<Student, Long> {
 	
 	
-	/**
-	 * Method that retrieves a list of Students search by Course
-	 * @param id
-	 * @return List of Students
-	 */
-	public List<Student> findByCourse(Course id);
+
 	
 	/**
 	 * Method that retrieves a Student search by his DNI number
-	 * @param dni
+	 * @param dni of the Student
 	 * @return a Student
 	 */
 	
-	public Student findByDni(String dni);
+	 Student findByDni(String dni);
 	
 	/**
 	 * Method that retrieves a Student or Students search by his surname
-	 * @param surname
+	 * @param surname of the Student
 	 * @return a Student or a list of Students
 	 */
-	public List<Student> findBySurname(String surname);
+	 List<Student> findBySurname(String surname);
 
 }
