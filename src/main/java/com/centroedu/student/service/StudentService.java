@@ -3,7 +3,7 @@ package com.centroedu.student.service;
 import java.util.List;
 
 
-import com.centroedu.student.entities.Course;
+
 import com.centroedu.student.entities.Student;
 import com.centroedu.student.utils.exceptions.StudentNotFoundException;
 
@@ -18,55 +18,49 @@ public interface StudentService {
 	 * Method that retrieves a list of all the Students
 	 * @return a list of Students
 	 */
-	public List<Student> listAllStudents(int offSet, int pageSize);
+	 List<Student> listAllStudents(int offSet, int pageSize);
 	
 	/**
 	 * Method that retrieves a Student search by his Id
-	 * @param id
+	 * @param id the Student
 	 * @return a Student
 	 */
-	public Student getStudent(Long id);
+	 Student getStudent(Long id);
 	
 	/**
 	 * Method that creates a Student
-	 * @param alumno
+	 * @param student set as a parameter
 	 * @return the created Student
 	 */
-	public Student createStudent(Student alumno) throws StudentNotFoundException;
+	 Student createStudent(Student student) throws StudentNotFoundException;
 	
 	/**
 	 * Method that updates a Student
-	 * @param student
+	 * @param  student set as a parameter
 	 * @return the updated Student
 	 */
-	public Student updateStudent(Student student);
+	 Student updateStudent(Student student);
 	
 	/**
 	 * Method that deletes a Student 
-	 * @param id
+	 * @param id of the Student
 	 * @return the confirmation of the deleted Student
 	 */
-	public Student deleteStudent(Long id);
-	
-	/**
-	 * Method that retrieves the list of Students in a Course
-	 * @param id
-	 * @return all the Students in a Course
-	 */
-	public List<Student> findByCourse(Course id);
+	 Student deleteStudent(Long id);
+
 	
 	/**
 	 * Method that retrieves a Student search by his Dni number
-	 * @param dni
-	 * @return
+	 * @param dni of the Student
+	 * @return a Student search by his Dni number
 	 */
-	public Student findByDni(String dni);
+	 Student findByDni(String dni);
 	
 	/**
 	 * Method that retrieves a Student or Students search by his surname
-	 * @param surname
-	 * @return a Student or Students
+	 * @param surname of the Student
+	 * @return a Student or a list Students
 	 */
-	public List<Student> findBySurname(String surname);
+	 List<Student> findBySurname(String surname);
 
 }
