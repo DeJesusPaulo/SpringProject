@@ -59,7 +59,7 @@
 		public ResponseEntity<Student> getStudent(@ApiParam(value = "Id of the Student") @PathVariable("id") Long id) {
 			if (id < 0) {
 				throw new InvalidIdException("Invalid Id");
-		}
+			}
 
 			Student student = studentService.getStudent(id);
 
@@ -77,20 +77,20 @@
 				@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
 		@PostMapping("/create")
 		public ResponseEntity<Student> createStudent(
-				@ApiParam(value = "A Student send as a parameter") @RequestBody @Valid Student alumno, BindingResult result){
-			log.info("Creating Student: {}", alumno);
+				@ApiParam(value = "A Student send as a parameter") @RequestBody @Valid Student student, BindingResult result){
+			log.info("Creating Student: {}", student);
 
 			if(result.hasErrors()){
 				throw new DataValidationException("Invalid Data", result);
 			}
 
-			Student student = studentService.createStudent(alumno);
+			Student newStudent = studentService.createStudent(student);
 
 			if (student == null) {
 				throw new StudentNotFoundException("Student not found");
 			}
 
-			return ResponseEntity.ok(student);
+			return ResponseEntity.ok(newStudent);
 		}
 
 		@ApiOperation(value = "update a Student")
@@ -131,7 +131,7 @@
 			log.info("Deleting Student with id{}", id);
 
 
-			if (id < 0 || id == null) {
+			if (id < 0) {
 				log.error("Unable to delete, Student with id{} not found", id);
 				throw new InvalidIdException("Invalid Id");
 			}
@@ -152,10 +152,14 @@
 		public ResponseEntity<Student> findByDni(@ApiParam(value = "Dni of the Student") @PathVariable("dni") String dni) {
 			log.info("Fetching a Student with dni{}", dni);
 
+			if (dni.isEmpty()) {
+				log.error("Unable to find dni");
+				throw new DniNotFoundException("DNI not found");
+			}
+
 			Student student = studentService.findByDni(dni);
 
-			if (dni.isEmpty() || (dni == null)) {
-				log.error("Unable to find dni", dni);
+			if (student == null) {
 				throw new StudentNotFoundException("Student not found");
 			}
 
@@ -171,20 +175,44 @@
 		public  ResponseEntity<List<Student>> findBySurname(@ApiParam(value = "Surname of the Student") @PathVariable("surname") String surname) {
 			log.info("Fetching a Student with surname{}", surname);
 
-			List<Student> students = studentService.findBySurname(surname);
-
 			if (surname == null) {
 				log.error("Unable to find surname{}",surname);
-				return ResponseEntity.noContent().build();
+				throw new SurnameNotFound("Surname of the Student not found");
+			}
+
+			List<Student> students = studentService.findBySurname(surname);
+
+			if (students.isEmpty()) {
+				throw new StudentNotFoundException("Student not found");
 			}
 
 			return ResponseEntity.ok(students);
 		}
 
+		@ApiOperation(value = "Retrieve a Course search by his ID")
+		@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
+				@ApiResponse(code = 404, message = "Service not found"),
+				@ApiResponse(code = 200, message = "Successful retrieval", response = Course.class) })
+		@GetMapping("/course/{id}")
+		public ResponseEntity<Course> getCourse(@ApiParam(value = "Id of the course") Long id){
+
+			if (id < 0 ) {
+				throw new InvalidIdException("Invalid Id");
+			}
+			Course course = courseService.findById(id);
+
+			if (course == null) {
+				log.error("Course with id {} not found");
+				throw new CourseNotFoundException("Course not found");
+			}
+
+			return ResponseEntity.ok(course);
+		}
+
 		@ApiOperation(value = "Show a list of all Courses")
 		@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
 				@ApiResponse(code = 404, message = "Service not found"),
-				@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
+				@ApiResponse(code = 200, message = "Successful retrieval", response = Course.class) })
 		@GetMapping("/courses")
 		public ResponseEntity<List<Course>> getAllCourses() {
 			log.info("Fetching list of Courses");
@@ -195,28 +223,6 @@
 			}
 
 			return ResponseEntity.ok(courses);
-		}
-
-		@ApiOperation(value = "Find a Student search by Course Id")
-		@ApiResponses(value = { @ApiResponse(code = 500, message = "Server error"),
-				@ApiResponse(code = 404, message = "Service not found"),
-				@ApiResponse(code = 200, message = "Successful retrieval", response = Student.class) })
-		@GetMapping("/courses/search/{id}")
-		public ResponseEntity<List<Student>> findByCourse(
-				@ApiParam(value = "Id of the Course") @PathVariable("id") Course id) {
-			log.info("Fetching a Student search by his Course");
-
-			if (id == null){
-				throw new InvalidIdException("Invalid Id");
-			}
-
-			List<Student> students = studentService.findByCourse(id);
-
-			if (students.isEmpty()) {
-				throw new ListStudentsNotFoundException("Students not found");
-			}
-
-			return ResponseEntity.ok(students);
 		}
 
 	}
